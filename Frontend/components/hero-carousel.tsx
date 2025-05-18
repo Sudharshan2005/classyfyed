@@ -1,8 +1,9 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useCallback } from "react"
 import { ChevronLeft, ChevronRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import Image from "next/image"
 
 const slides = [
   {
@@ -22,9 +23,9 @@ const slides = [
 export default function HeroCarousel() {
   const [current, setCurrent] = useState(0)
 
-  const nextSlide = () => {
-    setCurrent(current === slides.length - 1 ? 0 : current + 1)
-  }
+  const nextSlide = useCallback(() => {
+    setCurrent((prev) => (prev === slides.length - 1 ? 0 : prev + 1))
+  }, [])
 
   const prevSlide = () => {
     setCurrent(current === 0 ? slides.length - 1 : current - 1)
@@ -35,7 +36,7 @@ export default function HeroCarousel() {
       nextSlide()
     }, 5000)
     return () => clearInterval(interval)
-  }, [current])
+  }, [nextSlide])
 
   return (
     <div className="relative h-[60vh] overflow-hidden">
@@ -45,7 +46,7 @@ export default function HeroCarousel() {
       >
         {slides.map((slide, index) => (
           <div key={index} className="min-w-full h-full relative">
-            <img src={slide.image || "/placeholder.svg"} alt={slide.alt} className="w-full h-full object-cover" />
+            <Image src={slide.image || "/placeholder.svg"} alt={slide.alt} className="w-full h-full object-cover" />
           </div>
         ))}
       </div>

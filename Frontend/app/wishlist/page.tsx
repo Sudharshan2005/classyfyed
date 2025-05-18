@@ -10,6 +10,7 @@ import Navbar from "@/components/navbar"
 import Footer from "@/components/footer"
 import { Dialog, DialogContent } from "@/components/ui/dialog"
 import ProductDetail from "@/components/product-detail"
+import Image from "next/image"
 
 // Mock wishlist items
 const initialWishlistItems = [
@@ -61,14 +62,24 @@ const initialWishlistItems = [
 
 export default function WishlistPage() {
   const [wishlistItems, setWishlistItems] = useState(initialWishlistItems)
-  const [selectedProduct, setSelectedProduct] = useState<any>(null)
+  const [selectedProduct, setSelectedProduct] = useState<{
+    id: number;
+    name: string;
+    price: number;
+    originalPrice: number;
+    image: string;
+    discount: number;
+    rating: number;
+    reviews: number;
+    href: string;
+  } | null>(null)
   const [isDialogOpen, setIsDialogOpen] = useState(false)
 
   const removeFromWishlist = (id: number) => {
     setWishlistItems(wishlistItems.filter((item) => item.id !== id))
   }
 
-  const openProductDetail = (product: any) => {
+  const openProductDetail = (product: { id: number; name: string; price: number; originalPrice: number; image: string; discount: number; rating: number; reviews: number; href: string }) => {
     setSelectedProduct(product)
     setIsDialogOpen(true)
   }
@@ -92,7 +103,7 @@ export default function WishlistPage() {
                 {wishlistItems.map((item) => (
                   <Card key={item.id} className="overflow-hidden border rounded-lg hover:shadow-md transition-shadow">
                     <div className="relative">
-                      <img
+                      <Image
                         src={item.image || "/placeholder.svg"}
                         alt={item.name}
                         className="w-full aspect-square object-cover cursor-pointer"
@@ -137,7 +148,7 @@ export default function WishlistPage() {
               </div>
               <h2 className="text-2xl font-bold mb-2">Your wishlist is empty</h2>
               <p className="text-muted-foreground mb-6">
-                Looks like you haven't added any products to your wishlist yet.
+                Looks like you haven&apos;t added any products to your wishlist yet.
               </p>
               <Button asChild>
                 <Link href="/collections">Start Shopping</Link>
@@ -149,7 +160,7 @@ export default function WishlistPage() {
 
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
         <DialogContent className="max-w-4xl">
-          {selectedProduct && <ProductDetail product={selectedProduct} onClose={() => setIsDialogOpen(false)} />}
+          {selectedProduct && <ProductDetail product={selectedProduct} open={isDialogOpen} onClose={() => setIsDialogOpen(false)} />}
         </DialogContent>
       </Dialog>
 

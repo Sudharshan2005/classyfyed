@@ -1,16 +1,27 @@
-import { Suspense } from "react"
-import Link from "next/link"
-import { ChevronRight, Filter } from "lucide-react"
+import { Suspense } from "react";
+import Link from "next/link";
+import { ChevronRight, Filter } from "lucide-react";
 
-import { Button } from "@/components/ui/button"
-import { Checkbox } from "@/components/ui/checkbox"
-import { Badge } from "@/components/ui/badge"
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Skeleton } from "@/components/ui/skeleton"
-import Navbar from "@/components/navbar"
-import Footer from "@/components/footer"
-import ProductCard from "@/components/product-card"
+import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Badge } from "@/components/ui/badge";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Skeleton } from "@/components/ui/skeleton";
+import Navbar from "@/components/navbar";
+import Footer from "@/components/footer";
+import ProductCard from "@/components/product-card";
 
 // Mock data for filters
 const filters = {
@@ -41,7 +52,7 @@ const filters = {
     { id: "rating-2", name: "2★ & above" },
     { id: "rating-1", name: "1★ & above" },
   ],
-}
+};
 
 // Mock product data
 const mockProducts = [
@@ -101,10 +112,10 @@ async function SearchResults({
   minPrice,
   maxPrice,
 }: {
-  query: string
-  category?: string
-  minPrice?: string
-  maxPrice?: string
+  query: string;
+  category?: string;
+  minPrice?: string;
+  maxPrice?: string;
 }) {
   // Mock filtering logic based on query, category, minPrice, maxPrice
   let products = mockProducts;
@@ -130,12 +141,14 @@ async function SearchResults({
     return (
       <div className="text-center py-12">
         <h2 className="text-2xl font-bold mb-2">No results found</h2>
-        <p className="text-muted-foreground mb-6">We couldn&#39;t find any products matching your search for &quot;{query}&quot;</p>
+        <p className="text-muted-foreground mb-6">
+          We couldn&apos;t find any products matching your search for &quot;{query}&quot;
+        </p>
         <Button asChild>
           <Link href="/collections">Browse Collections</Link>
         </Button>
       </div>
-    )
+    );
   }
 
   return (
@@ -157,7 +170,7 @@ async function SearchResults({
         />
       ))}
     </div>
-  )
+  );
 }
 
 function SearchResultsSkeleton() {
@@ -174,18 +187,21 @@ function SearchResultsSkeleton() {
         </div>
       ))}
     </div>
-  )
+  );
 }
 
-export default function SearchPage({
-  searchParams,
-}: {
-  searchParams: { q?: string; category?: string; minPrice?: string; maxPrice?: string }
-}) {
-  const query = searchParams.q || ""
-  const category = searchParams.category
-  const minPrice = searchParams.minPrice
-  const maxPrice = searchParams.maxPrice
+// Define the props type
+type Props = {
+  searchParams: Promise<{
+    q?: string;
+    category?: string;
+    minPrice?: string;
+    maxPrice?: string;
+  }>;
+};
+
+export default async function SearchPage({ searchParams }: Props) {
+  const { q = "", category, minPrice, maxPrice } = await searchParams; // Unwrap the Promise
 
   return (
     <div className="flex min-h-screen flex-col">
@@ -216,7 +232,10 @@ export default function SearchPage({
                 </div>
 
                 <div className="space-y-4">
-                  <Accordion type="multiple" defaultValue={["brands", "price", "discount", "rating"]}>
+                  <Accordion
+                    type="multiple"
+                    defaultValue={["brands", "price", "discount", "rating"]}
+                  >
                     <AccordionItem value="brands">
                       <AccordionTrigger className="py-2">Brands</AccordionTrigger>
                       <AccordionContent>
@@ -301,7 +320,7 @@ export default function SearchPage({
             <div className="flex-1">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
                 <div>
-                  <h1 className="text-2xl font-bold">Search Results for &quot;{query}&quot;</h1>
+                  <h1 className="text-2xl font-bold">Search Results for &quot;{q}&quot;</h1>
                 </div>
 
                 <div className="flex items-center gap-2">
@@ -354,7 +373,12 @@ export default function SearchPage({
 
               {/* Products grid */}
               <Suspense fallback={<SearchResultsSkeleton />}>
-                <SearchResults query={query} category={category} minPrice={minPrice} maxPrice={maxPrice} />
+                <SearchResults
+                  query={q}
+                  category={category}
+                  minPrice={minPrice}
+                  maxPrice={maxPrice}
+                />
               </Suspense>
             </div>
           </div>
@@ -362,5 +386,5 @@ export default function SearchPage({
       </main>
       <Footer />
     </div>
-  )
+  );
 }

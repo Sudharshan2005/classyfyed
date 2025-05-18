@@ -1,10 +1,20 @@
 {
+  "/api/verify-student/route": "app/api/verify-student/route.js",
   "/_not-found/page": "app/_not-found/page.js",
+  "/api/search/route": "app/api/search/route.js",
+  "/favicon.ico/route": "app/favicon.ico/route.js",
   "/admin/dashboard/page": "app/admin/dashboard/page.js",
+  "/cart/page": "app/cart/page.js",
   "/auth/login/page": "app/auth/login/page.js",
   "/auth/register/page": "app/auth/register/page.js",
-  "/favicon.ico/route": "app/favicon.ico/route.js",
+  "/collections/[category]/page": "app/collections/[category]/page.js",
+  "/collections/page": "app/collections/page.js",
   "/page": "app/page.js",
+  "/contact/page": "app/contact/page.js",
+  "/search/page": "app/search/page.js",
   "/user/dashboard/page": "app/user/dashboard/page.js",
-  "/vendor/register/page": "app/vendor/register/page.js"
+  "/vendor/dashboard/page": "app/vendor/dashboard/page.js",
+  "/wishlist/page": "app/wishlist/page.js",
+  "/vendor/register/page": "app/vendor/register/page.js",
+  "/vendor/login/page": "app/vendor/login/page.js"
 }

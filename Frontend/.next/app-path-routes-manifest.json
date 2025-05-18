@@ -1,0 +1,20 @@
+{
+  "/api/verify-student/route": "/api/verify-student",
+  "/_not-found/page": "/_not-found",
+  "/api/search/route": "/api/search",
+  "/favicon.ico/route": "/favicon.ico",
+  "/admin/dashboard/page": "/admin/dashboard",
+  "/cart/page": "/cart",
+  "/auth/login/page": "/auth/login",
+  "/auth/register/page": "/auth/register",
+  "/collections/[category]/page": "/collections/[category]",
+  "/collections/page": "/collections",
+  "/page": "/",
+  "/contact/page": "/contact",
+  "/search/page": "/search",
+  "/user/dashboard/page": "/user/dashboard",
+  "/vendor/dashboard/page": "/vendor/dashboard",
+  "/wishlist/page": "/wishlist",
+  "/vendor/register/page": "/vendor/register",
+  "/vendor/login/page": "/vendor/login"
+}

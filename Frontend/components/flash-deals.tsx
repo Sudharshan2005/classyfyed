@@ -2,6 +2,7 @@ import Link from "next/link"
 import { Clock } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
+import Image from "next/image"
 
 const products = [
   {
@@ -56,7 +57,7 @@ export default function FlashDeals() {
             <div className="relative overflow-hidden rounded-lg border bg-background transition-all hover:shadow-md">
               <Badge className="absolute top-2 right-2 bg-red-500 hover:bg-red-600">{product.discount}% OFF</Badge>
               <div className="relative aspect-square overflow-hidden">
-                <img
+                <Image
                   src={product.image || "/placeholder.svg"}
                   alt={product.name}
                   className="object-cover w-full h-full transition-transform group-hover:scale-105"

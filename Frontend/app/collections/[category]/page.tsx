@@ -1,14 +1,25 @@
-import Link from "next/link"
-import { ChevronRight, Filter } from "lucide-react"
+import Link from "next/link";
+import { ChevronRight, Filter } from "lucide-react";
 
-import { Button } from "@/components/ui/button"
-import { Checkbox } from "@/components/ui/checkbox"
-import { Badge } from "@/components/ui/badge"
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import Navbar from "@/components/navbar"
-import Footer from "@/components/footer"
-import ProductCard from "@/components/product-card"
+import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Badge } from "@/components/ui/badge";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import Navbar from "@/components/navbar";
+import Footer from "@/components/footer";
+import ProductCard from "@/components/product-card";
 
 // Mock data for products
 const products = [
@@ -100,7 +111,7 @@ const products = [
     reviews: 78,
     href: "/product/mechanical-keyboard-rgb",
   },
-]
+];
 
 // Mock data for filters
 const filters = {
@@ -131,14 +142,20 @@ const filters = {
     { id: "rating-2", name: "2★ & above" },
     { id: "rating-1", name: "1★ & above" },
   ],
-}
+};
 
-export default function CategoryPage({ params }: { params: { category: string } }) {
-  const categoryName = params.category.replace(/-/g, " ")
+// Define the props type
+type Props = {
+  params: Promise<{ category: string }>;
+};
+
+export default async function CategoryPage({ params }: Props) {
+  const { category } = await params; // Unwrap the Promise
+  const categoryName = category.replace(/-/g, " ");
   const formattedCategoryName = categoryName
     .split(" ")
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-    .join(" ")
+    .join(" ");
 
   return (
     <div className="flex min-h-screen flex-col">
@@ -341,5 +358,5 @@ export default function CategoryPage({ params }: { params: { category: string } 
       </main>
       <Footer />
     </div>
-  )
+  );
 }

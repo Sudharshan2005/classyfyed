@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import Navbar from "@/components/navbar"
 import Footer from "@/components/footer"
+import Image from "next/image"
 
 // Mock categories data
 const categories = [
@@ -98,7 +99,7 @@ export default function CollectionsPage() {
                 .map((category) => (
                   <Link key={category.id} href={category.href} className="group">
                     <div className="relative overflow-hidden rounded-lg aspect-[4/3]">
-                      <img
+                      <Image
                         src={category.image || "/placeholder.svg"}
                         alt={category.name}
                         className="w-full h-full object-cover transition-transform group-hover:scale-105"
@@ -124,7 +125,7 @@ export default function CollectionsPage() {
               {categories.map((category) => (
                 <Card key={category.id} className="overflow-hidden">
                   <div className="aspect-video overflow-hidden">
-                    <img
+                    <Image
                       src={category.image || "/placeholder.svg"}
                       alt={category.name}
                       className="w-full h-full object-cover transition-transform hover:scale-105"
