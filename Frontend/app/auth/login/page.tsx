@@ -80,7 +80,7 @@ export default function LoginPage() {
       localStorage.setItem("token", data.token)
       console.log("LoginPage - Login successful for mobile:", mobile)
       setError("")
-      router.push("/") // Redirect to dashboard
+      router.push("/user/dashboard") // Redirect to dashboard
     } catch (err) {
       console.error("LoginPage - Error signing in:", err)
       setError("Error signing in")
