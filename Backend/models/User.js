@@ -27,6 +27,13 @@ const userSchema = new mongoose.Schema({
     trim: true,
     match: [/^\d{10}$/, "Please enter a valid 10-digit mobile number"],
   },
+  email: {
+    type: String,
+    required: true,
+    trim: true,
+    match: [/^[^\s@]+@[^\s@]+\.[^\s@]+$/, "Please enter a valid email address"],
+    unique: true,
+  },
   gender: {
     type: String,
     enum: ["male", "female", "other"],

@@ -15,7 +15,11 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Classyfyed",
   description: "E-commerce site for student",
+  icons: {
+    icon: "https://classyfyed.s3.us-east-1.amazonaws.com/classyfyed.jpg",
+  },
 };
+
 
 export default function RootLayout({
   children,

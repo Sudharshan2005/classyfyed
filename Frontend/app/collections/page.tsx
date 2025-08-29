@@ -71,7 +71,7 @@ const subcategories = {
 
 export default function CollectionsPage() {
   return (
-    <div className="flex min-h-screen flex-col">
+    <div className="flex min-h-screen flex-col text-blue-950">
       <Navbar />
       <main className="flex-1">
         <div className="container mx-auto py-10 px-4">
@@ -102,6 +102,8 @@ export default function CollectionsPage() {
                       <Image
                         src={category.image || "/placeholder.svg"}
                         alt={category.name}
+                        height={400}
+                        width={600}
                         className="w-full h-full object-cover transition-transform group-hover:scale-105"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex flex-col justify-end p-6 text-white">
@@ -123,11 +125,13 @@ export default function CollectionsPage() {
             <h2 className="text-2xl font-bold mb-6">All Categories</h2>
             <div className="grid md:grid-cols-3 gap-8">
               {categories.map((category) => (
-                <Card key={category.id} className="overflow-hidden">
+                <Card key={category.id} className="overflow-hidden text-blue-950">
                   <div className="aspect-video overflow-hidden">
                     <Image
                       src={category.image || "/placeholder.svg"}
                       alt={category.name}
+                      height={400}
+                      width={600}
                       className="w-full h-full object-cover transition-transform hover:scale-105"
                     />
                   </div>

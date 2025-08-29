@@ -7,15 +7,15 @@ import Image from "next/image"
 
 const slides = [
   {
-    image: "/placeholder.svg?height=600&width=1200",
+    image: "https://classyfyed.s3.us-east-1.amazonaws.com/carousel-1.png",
     alt: "Student discount offers",
   },
   {
-    image: "/placeholder.svg?height=600&width=1200",
+    image: "https://classyfyed.s3.us-east-1.amazonaws.com/carousel-4.png",
     alt: "Premium subscriptions",
   },
   {
-    image: "/placeholder.svg?height=600&width=1200",
+    image: "https://classyfyed.s3.us-east-1.amazonaws.com/carousel-3.png",
     alt: "Exclusive deals",
   },
 ]
@@ -46,7 +46,7 @@ export default function HeroCarousel() {
       >
         {slides.map((slide, index) => (
           <div key={index} className="min-w-full h-full relative">
-            <Image src={slide.image || "/placeholder.svg"} alt={slide.alt} className="w-full h-full object-cover" />
+            <Image width={1200} height={600} src={slide.image} alt={slide.alt} className="w-full h-full object-cover" />
           </div>
         ))}
       </div>

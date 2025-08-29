@@ -51,14 +51,16 @@ export default function FlashDeals() {
         <div className="text-sm font-medium">Ends in: 23:59:59</div>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 text-blue-950">
         {products.map((product) => (
           <Link href={product.href} key={product.id} className="group">
             <div className="relative overflow-hidden rounded-lg border bg-background transition-all hover:shadow-md">
               <Badge className="absolute top-2 right-2 bg-red-500 hover:bg-red-600">{product.discount}% OFF</Badge>
               <div className="relative aspect-square overflow-hidden">
                 <Image
-                  src={product.image || "/placeholder.svg"}
+                width={300}
+                height={300}
+                  src={"https://classyfyed.s3.us-east-1.amazonaws.com/product-placeholder.png"}
                   alt={product.name}
                   className="object-cover w-full h-full transition-transform group-hover:scale-105"
                 />
@@ -70,7 +72,7 @@ export default function FlashDeals() {
                   <span className="text-sm text-muted-foreground line-through">${product.originalPrice}</span>
                 </div>
                 <div className="mt-3 flex gap-2">
-                  <Button size="sm" className="w-full">
+                  <Button size="sm" className="w-full text-white bg-blue-950 hover:bg-blue-800">
                     Add to Cart
                   </Button>
                 </div>

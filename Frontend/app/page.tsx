@@ -6,14 +6,41 @@ import { ArrowRight, CheckCircle2, Store, TrendingUp, Users, Shield } from "luci
 
 import { Button } from "@/components/ui/button"
 import HeroCarousel from "@/components/hero-carousel"
-import FeaturedCategories from "@/components/featured-categories"
 import FlashDeals from "@/components/flash-deals"
-import Navbar from "@/components/navbar"
+import Navbar from "@/components/navbarL"
 import Footer from "@/components/footer"
 import Image from "next/image"
 
 export default function Home() {
   const router = useRouter()
+
+  const categories = [
+    {
+      name: "Electronics",
+      image: "https://classyfyed.s3.us-east-1.amazonaws.com/electronics.jpg",
+      href: "/collections/electronics",
+    },
+    {
+      name: "Books & Stationery",
+      image: "https://classyfyed.s3.us-east-1.amazonaws.com/stationary.jpg",
+      href: "/collections/books-stationery",
+    },
+    {
+      name: "Subscriptions",
+      image: "https://classyfyed.s3.us-east-1.amazonaws.com/subscriptions.png",
+      href: "/collections/subscriptions",
+    },
+    {
+      name: "Fashion",
+      image: "https://classyfyed.s3.us-east-1.amazonaws.com/fashion.png",
+      href: "/collections/fashion",
+    },
+    {
+      name: "Lifestyle",
+      image: "https://classyfyed.s3.us-east-1.amazonaws.com/lifestyle.png",
+      href: "/collections/lifestyle",
+    },
+  ]
 
   interface HandleProtectedLinkEvent {
     preventDefault: () => void;
@@ -22,7 +49,7 @@ export default function Home() {
   const handleProtectedLink = (e: HandleProtectedLinkEvent, href: string): void => {
     const exemptRoutes: string[] = ["/about", "/contact", "/auth/login"];
     if (exemptRoutes.includes(href)) {
-      return; // Allow navigation without token check
+      return;
     }
 
     const token: string | null = localStorage.getItem("token");
@@ -31,7 +58,6 @@ export default function Home() {
       console.log("Home - No JWT token, redirecting to /auth/login");
       router.push("/auth/login");
     }
-    // If token exists, navigation proceeds normally via Link
   };
 
   return (
@@ -48,11 +74,16 @@ export default function Home() {
               Join thousands of students saving on products and subscriptions
             </p>
             <div className="flex flex-col sm:flex-row gap-4 mt-6">
-              <Button size="lg" asChild className="bg-primary hover:bg-primary/90">
-                <Link href="/auth/register" onClick={(e) => handleProtectedLink(e, "/auth/register")}>
-                  Get Started <ArrowRight className="ml-2 h-4 w-4" />
-                </Link>
-              </Button>
+            <Button
+              size="lg"
+              asChild
+              className="bg-gradient-to-r from-[#194EB4] to-[#AC67DE] hover:opacity-90"
+            >
+              <Link href="/auth/register" onClick={(e) => handleProtectedLink(e, "/auth/register")}>
+                Get Started
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </Link>
+            </Button>
               <Button
                 size="lg"
                 variant="outline"
@@ -67,30 +98,30 @@ export default function Home() {
 
         <section className="py-12 px-4 md:px-6 bg-white">
           <div className="container mx-auto">
-            <h2 className="text-3xl font-bold text-center mb-8">How It Works</h2>
+            <h2 className="text-3xl font-bold text-center mb-8 text-blue-950">How It Works</h2>
             <div className="grid md:grid-cols-3 gap-8">
               <div className="flex flex-col items-center text-center p-6 rounded-lg border bg-card">
                 <div className="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center mb-4">
-                  <span className="text-primary font-bold text-xl">1</span>
+                  <span className="text-blue-950 font-bold text-xl">1</span>
                 </div>
-                <h3 className="text-xl font-semibold mb-2">Register & Verify</h3>
-                <p className="text-muted-foreground">
+                <h3 className="text-xl font-semibold mb-2 text-blue-950">Register & Verify</h3>
+                <p className="text-blue-950">
                   Sign up with your institute details and verify your student status
                 </p>
               </div>
               <div className="flex flex-col items-center text-center p-6 rounded-lg border bg-card">
                 <div className="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center mb-4">
-                  <span className="text-primary font-bold text-xl">2</span>
+                  <span className="text-blue-950 font-bold text-xl">2</span>
                 </div>
-                <h3 className="text-xl font-semibold mb-2">Browse Discounts</h3>
-                <p className="text-muted-foreground">Explore exclusive discounts on products and subscriptions</p>
+                <h3 className="text-xl font-semibold mb-2 text-blue-950">Browse Discounts</h3>
+                <p className="text-blue-950">Explore exclusive discounts on products and subscriptions</p>
               </div>
               <div className="flex flex-col items-center text-center p-6 rounded-lg border bg-card">
                 <div className="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center mb-4">
-                  <span className="text-primary font-bold text-xl">3</span>
+                  <span className="text-blue-950 font-bold text-xl">3</span>
                 </div>
-                <h3 className="text-xl font-semibold mb-2">Save & Enjoy</h3>
-                <p className="text-muted-foreground">Purchase with verified student discounts and save money</p>
+                <h3 className="text-xl font-semibold mb-2 text-blue-950">Save & Enjoy</h3>
+                <p className="text-blue-950">Purchase with verified student discounts and save money</p>
               </div>
             </div>
           </div>
@@ -98,13 +129,28 @@ export default function Home() {
 
         <section className="py-12 px-4 md:px-6 bg-muted/30">
           <div className="container mx-auto">
-            <h2 className="text-3xl font-bold text-center mb-2">Popular Categories</h2>
-            <p className="text-center text-muted-foreground mb-8">Discover discounts across various categories</p>
-            <FeaturedCategories />
+            <h2 className="text-3xl font-bold text-center mb-2 text-blue-950">Popular Categories</h2>
+            <p className="text-center mb-8 text-blue-800">Discover discounts across various categories</p>
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
+            {categories.map((category) => (
+              <Link key={category.name} href={"/auth/login"} className="group flex flex-col items-center text-center text-blue-950">
+                <div className="relative mb-3 h-24 w-24 overflow-hidden rounded-full bg-muted p-1 transition-all group-hover:scale-105">
+                  <Image
+                  width={200}
+                  height={200}
+                    src={category.image || "/placeholder.svg"}
+                    alt={category.name}
+                    className="h-full w-full object-cover rounded-full"
+                  />
+                </div>
+                <h3 className="text-sm font-medium group-hover:text-primary">{category.name}</h3>
+              </Link>
+            ))}
+          </div>
           </div>
         </section>
 
-        <section className="py-12 px-4 md:px-6 bg-white">
+        <section className="py-12 px-4 md:px-6 bg-white text-blue-950">
           <div className="container mx-auto">
             <div className="flex items-center justify-between mb-8">
               <h2 className="text-3xl font-bold">Flash Deals</h2>
@@ -120,7 +166,7 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="py-12 px-4 md:px-6 bg-primary text-primary-foreground">
+        <section className="py-12 px-4 md:px-6 bg-blue-950 text-primary-foreground">
           <div className="container mx-auto">
             <div className="grid md:grid-cols-2 gap-8 items-center">
               <div>
@@ -162,8 +208,7 @@ export default function Home() {
           </div>
         </section>
 
-        {/* New Vendor Section */}
-        <section className="py-12 px-4 md:px-6 bg-gradient-to-r from-blue-50 to-indigo-50">
+        <section className="py-12 px-4 md:px-6 bg-gradient-to-r from-blue-50 to-indigo-50 text-blue-950">
           <div className="container mx-auto">
             <div className="text-center mb-10">
               <h2 className="text-3xl font-bold mb-3">Become a Vendor Partner</h2>
@@ -222,12 +267,12 @@ export default function Home() {
                     Join our marketplace of trusted vendors and connect with verified students across the country. Our vendor program features competitive commission rates, powerful analytics, and dedicated support.
                   </p>
                   <div className="flex flex-col sm:flex-row gap-4">
-                    <Button size="lg" className="bg-primary hover:bg-primary/90" asChild>
-                      <Link href="/vendor/register" onClick={(e) => handleProtectedLink(e, "/vendor/register")}>
+                    <Button size="lg" className="bg-blue-950 hover:bg-blue-950/90" asChild>
+                      <Link href="/vendor/register">
                         Become a Vendor <ArrowRight className="ml-2 h-4 w-4" />
                       </Link>
                     </Button>
-                    <Button size="lg" variant="outline" className="border-primary text-primary hover:bg-primary/10" asChild>
+                    <Button size="lg" variant="outline" className="border-blue-950 text-blue-950 hover:bg-blue-950/10" asChild>
                       <Link href="/vendors/learn-more" onClick={(e) => handleProtectedLink(e, "/vendors/learn-more")}>
                         Learn More
                       </Link>

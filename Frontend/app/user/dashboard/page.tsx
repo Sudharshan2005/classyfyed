@@ -1,8 +1,8 @@
 "use client"
 
-import { useEffect, useState, useCallback } from "react"
+// import { useEffect, useState, useCallback } from "react"
 import Link from "next/link"
-import { ArrowRight, ChevronLeft, ChevronRight, Star } from "lucide-react"
+import { ArrowRight, Star } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
@@ -12,6 +12,7 @@ import Navbar from "@/components/navbar"
 import Footer from "@/components/footer"
 import FeaturedCategories from "@/components/featured-categories"
 import FlashDeals from "@/components/flash-deals"
+import Carousel3D from "@/components/carousel-3d"
 import Image from "next/image"
 
 export default function Dashboard() {
@@ -23,13 +24,13 @@ export default function Dashboard() {
           <Carousel3D />
         </section>
 
-        <section className="py-12 px-4 md:px-6 bg-white">
+        <section className="py-12 px-4 md:px-6 bg-white text-blue-950">
           <div className="container mx-auto">
             <h2 className="text-3xl font-bold text-center mb-8">Personalized Recommendations</h2>
             <div className="grid md:grid-cols-3 gap-8">
               <div className="flex flex-col items-center text-center p-6 rounded-lg border bg-card">
                 <div className="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center mb-4">
-                  <Star className="h-6 w-6 text-primary" />
+                  <Star className="h-6 w-6 text-blue-950" />
                 </div>
                 <h3 className="text-xl font-semibold mb-2">Top Picks For You</h3>
                 <p className="text-muted-foreground">
@@ -48,7 +49,7 @@ export default function Dashboard() {
                     strokeWidth="2"
                     strokeLinecap="round"
                     strokeLinejoin="round"
-                    className="text-primary"
+                    className="text-blue-950"
                   >
                     <path d="M12 2v8" />
                     <path d="m4.93 10.93 1.41 1.41" />
@@ -77,7 +78,7 @@ export default function Dashboard() {
                     strokeWidth="2"
                     strokeLinecap="round"
                     strokeLinejoin="round"
-                    className="text-primary"
+                    className="text-blue-950"
                   >
                     <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
                     <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
@@ -92,7 +93,7 @@ export default function Dashboard() {
           </div>
         </section>
 
-        <section className="py-12 px-4 md:px-6 bg-muted/30">
+        <section className="py-12 px-4 md:px-6 bg-muted/30 text-blue-950">
           <div className="container mx-auto">
             <h2 className="text-3xl font-bold text-center mb-2">Popular Categories</h2>
             <p className="text-center text-muted-foreground mb-8">Discover discounts across various categories</p>
@@ -105,15 +106,15 @@ export default function Dashboard() {
             <Tabs defaultValue="deals">
               <div className="flex justify-between items-center mb-6">
                 <TabsList>
-                  <TabsTrigger value="deals">Flash Deals</TabsTrigger>
-                  <TabsTrigger value="trending">Trending</TabsTrigger>
-                  <TabsTrigger value="recent">Recently Viewed</TabsTrigger>
+                  <TabsTrigger className="text-blue-950" value="deals">Flash Deals</TabsTrigger>
+                  <TabsTrigger className="text-blue-950" value="trending">Trending</TabsTrigger>
+                  <TabsTrigger className="text-blue-950" value="recent">Recently Viewed</TabsTrigger>
                 </TabsList>
                 <Link
                   href="/collections/flash-deals"
-                  className="text-primary font-medium hover:underline flex items-center"
+                  className="text-blue-950 font-medium hover:underline flex items-center"
                 >
-                  View All <ArrowRight className="ml-1 h-4 w-4" />
+                  View All <ArrowRight className="ml-1 h-4 w-4 text-blue-950" />
                 </Link>
               </div>
 
@@ -130,7 +131,7 @@ export default function Dashboard() {
           </div>
         </section>
 
-        <section className="py-12 px-4 md:px-6 bg-primary text-primary-foreground">
+        <section className="py-12 px-4 md:px-6 bg-blue-950 text-primary-foreground">
           <div className="container mx-auto">
             <div className="grid md:grid-cols-2 gap-8 items-center">
               <div>
@@ -195,12 +196,12 @@ export default function Dashboard() {
           </div>
         </section>
 
-        <section className="py-12 px-4 md:px-6 bg-white">
+        <section className="py-12 px-4 md:px-6 bg-white text-blue-950">
           <div className="container mx-auto">
             <h2 className="text-3xl font-bold text-center mb-8">Upcoming Campus Events</h2>
             <div className="grid md:grid-cols-3 gap-6">
               <Card>
-                <CardContent className="p-0">
+                <CardContent className="p-0 text-blue-950">
                   <div className="relative">
                     <Image
                       src="/placeholder.svg?height=200&width=400"
@@ -209,7 +210,7 @@ export default function Dashboard() {
                       width={400}
                       height={200}
                     />
-                    <Badge className="absolute top-2 right-2">Next Week</Badge>
+                    <Badge className="absolute top-2 right-2 bg-blue-950">Next Week</Badge>
                   </div>
                   <div className="p-6">
                     <h3 className="font-bold text-lg mb-2">Tech Expo 2023</h3>
@@ -227,7 +228,7 @@ export default function Dashboard() {
               </Card>
 
               <Card>
-                <CardContent className="p-0">
+                <CardContent className="p-0 text-blue-950">
                   <div className="relative">
                     <Image
                       src="/placeholder.svg?height=200&width=400"
@@ -236,7 +237,7 @@ export default function Dashboard() {
                       width={400}
                       height={200}
                     />
-                    <Badge className="absolute top-2 right-2">This Month</Badge>
+                    <Badge className="absolute top-2 right-2 bg-blue-950">This Month</Badge>
                   </div>
                   <div className="p-6">
                     <h3 className="font-bold text-lg mb-2">National Book Fair</h3>
@@ -254,7 +255,7 @@ export default function Dashboard() {
               </Card>
 
               <Card>
-                <CardContent className="p-0">
+                <CardContent className="p-0 text-blue-950">
                   <div className="relative">
                     <Image
                       src="/placeholder.svg?height=200&width=400"
@@ -263,7 +264,7 @@ export default function Dashboard() {
                       height={200}
                       width={400}
                     />
-                    <Badge className="absolute top-2 right-2">Coming Soon</Badge>
+                    <Badge className="absolute top-2 right-2 bg-blue-950">Coming Soon</Badge>
                   </div>
                   <div className="p-6">
                     <h3 className="font-bold text-lg mb-2">Career Fair 2023</h3>
@@ -284,167 +285,6 @@ export default function Dashboard() {
         </section>
       </main>
       <Footer />
-    </div>
-  )
-}
-
-function Carousel3D() {
-  const [currentSlide, setCurrentSlide] = useState(0)
-  const [isAnimating, setIsAnimating] = useState(false)
-  const totalSlides = 5
-
-  const slides = [
-    {
-      image: "https://placehold.co/1200x600",
-      alt: "Premium electronics with student discounts",
-    },
-    {
-      image: "https://placehold.co/1200x600",
-      alt: "Exclusive software subscriptions",
-    },
-    {
-      image: "https://placehold.co/1200x600",
-      alt: "Academic textbooks and resources",
-    },
-    {
-      image: "https://placehold.co/1200x600",
-      alt: "Campus lifestyle essentials",
-    },
-    {
-      image: "https://placehold.co/1200x600",
-      alt: "Professional development tools",
-    },
-  ]
-
-  const nextSlide = useCallback(() => {
-    if (isAnimating) return
-    setIsAnimating(true)
-    setCurrentSlide((prev) => (prev === totalSlides - 1 ? 0 : prev + 1))
-    setTimeout(() => setIsAnimating(false), 500)
-  }, [isAnimating, totalSlides])
-
-  const prevSlide = () => {
-    if (isAnimating) return
-    setIsAnimating(true)
-    setCurrentSlide((prev) => (prev === 0 ? totalSlides - 1 : prev - 1))
-    setTimeout(() => setIsAnimating(false), 500)
-  }
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      nextSlide()
-    }, 5000)
-    return () => clearInterval(interval)
-  }, [currentSlide, isAnimating, nextSlide])
-
-  const getSlideStyle = (index: number) => {
-    // Calculate the position of each slide in the 3D carousel
-    const diff = (index - currentSlide + totalSlides) % totalSlides
-    let rotateY = 0
-    let translateZ = 0
-    let opacity = 0
-    let zIndex = 0
-
-    if (diff === 0) {
-      // Current slide
-      rotateY = 0
-      translateZ = 0
-      opacity = 1
-      zIndex = totalSlides
-    } else if (diff === 1 || diff === totalSlides - 1) {
-      // Adjacent slides
-      rotateY = diff === 1 ? 45 : -45
-      translateZ = -150
-      opacity = 0.7
-      zIndex = totalSlides - 1
-    } else {
-      // Other slides
-      rotateY = diff === 2 ? 90 : -90
-      translateZ = -300
-      opacity = 0.3
-      zIndex = totalSlides - 2
-    }
-
-    return {
-      transform: `rotateY(${rotateY}deg) translateZ(${translateZ}px)`,
-      opacity,
-      zIndex,
-      transition: "all 0.5s ease-in-out",
-    }
-  }
-
-  return (
-    <div className="relative h-[60vh] overflow-hidden bg-gradient-to-r from-gray-900 to-gray-800 perspective">
-      <div className="absolute inset-0 flex items-center justify-center">
-        <div className="relative w-full h-full preserve-3d">
-          {slides.map((slide, index) => (
-            <div
-              key={index}
-              className="absolute inset-0 w-full h-full flex items-center justify-center"
-              style={getSlideStyle(index)}
-            >
-              <div className="relative w-[80%] h-[80%] rounded-lg overflow-hidden shadow-2xl transform-style-3d">
-                <Image
-                  src={slide.image || "/placeholder.svg"}
-                  alt={slide.alt}
-                  className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
-                  width={1200}
-                  height={600}
-                />
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      <div className="absolute inset-0 flex items-center justify-between p-4 z-10">
-        <Button
-          variant="ghost"
-          size="icon"
-          onClick={prevSlide}
-          className="h-12 w-12 rounded-full bg-black/20 text-white hover:bg-black/40"
-        >
-          <ChevronLeft className="h-6 w-6" />
-          <span className="sr-only">Previous slide</span>
-        </Button>
-        <Button
-          variant="ghost"
-          size="icon"
-          onClick={nextSlide}
-          className="h-12 w-12 rounded-full bg-black/20 text-white hover:bg-black/40"
-        >
-          <ChevronRight className="h-6 w-6" />
-          <span className="sr-only">Next slide</span>
-        </Button>
-      </div>
-
-      <div className="absolute bottom-4 left-0 right-0 z-10">
-        <div className="flex items-center justify-center gap-2">
-          {slides.map((_, index) => (
-            <button
-              key={index}
-              className={`h-2 w-2 rounded-full transition-all ${
-                currentSlide === index ? "bg-white w-4" : "bg-white/50"
-              }`}
-              onClick={() => setCurrentSlide(index)}
-            >
-              <span className="sr-only">Go to slide {index + 1}</span>
-            </button>
-          ))}
-        </div>
-      </div>
-
-      <style jsx global>{`
-        .perspective {
-          perspective: 1000px;
-        }
-        .preserve-3d {
-          transform-style: preserve-3d;
-        }
-        .transform-style-3d {
-          transform-style: preserve-3d;
-        }
-      `}</style>
     </div>
   )
 }

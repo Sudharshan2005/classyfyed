@@ -1,22 +1,21 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import Link from "next/link"
-import { useRouter } from "next/navigation"
-import { ArrowLeft } from "lucide-react"
-
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Textarea } from "@/components/ui/textarea"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { useToast } from "@/hooks/use-toast"
+import { useState } from "react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { ArrowLeft } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { useToast } from "@/hooks/use-toast";
 
 export default function VendorRegisterPage() {
-  const [otpSent, setOtpSent] = useState(false)
-  const [step, setStep] = useState(1)
-  const BASE_URL=process.env.NEXT_PUBLIC_BASE_URL
+  const [otpSent, setOtpSent] = useState(false);
+  const [step, setStep] = useState(1);
+  const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "";
   const [formData, setFormData] = useState({
     businessName: "",
     businessType: "",
@@ -24,7 +23,7 @@ export default function VendorRegisterPage() {
     contactName: "",
     email: "",
     mobile: "",
-    otp: "",
+    otp: ["", "", "", ""],
     address: "",
     city: "",
     state: "",
@@ -38,10 +37,10 @@ export default function VendorRegisterPage() {
     accountHolder: "",
     password: "",
     confirmPassword: "",
-  })
-  const [errors, setErrors] = useState<Errors>({})
-  const { toast } = useToast()
-  const router = useRouter()
+  });
+  const [errors, setErrors] = useState<Errors>({});
+  const { toast } = useToast();
+  const router = useRouter();
 
   interface FormData {
     businessName: string;
@@ -50,7 +49,7 @@ export default function VendorRegisterPage() {
     contactName: string;
     email: string;
     mobile: string;
-    otp: string;
+    otp: string[];
     address: string;
     city: string;
     state: string;
@@ -77,14 +76,14 @@ export default function VendorRegisterPage() {
       if (!formData.businessType) newErrors.businessType = "Business type is required";
       if (!formData.businessCategory) newErrors.businessCategory = "Business category is required";
       if (!formData.contactName) newErrors.contactName = "Contact person name is required";
-      // if (!formData.email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      //   newErrors.email = "Please enter a valid email";
-      // }
+      if (!formData.email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+        newErrors.email = "Please enter a valid email";
+      }
       if (!formData.mobile || !/^\d{10}$/.test(formData.mobile)) {
         newErrors.mobile = "Please enter a valid 10-digit mobile number";
       }
-      if (otpSent && (!formData.otp || formData.otp !== "1234")) {
-        newErrors.otp = "Invalid OTP";
+      if (otpSent && formData.otp.some((digit) => !/^\d$/.test(digit))) {
+        newErrors.otp = "Please enter a valid 4-digit OTP";
       }
     } else if (currentStep === 2) {
       if (!formData.address) newErrors.address = "Business address is required";
@@ -94,18 +93,9 @@ export default function VendorRegisterPage() {
         newErrors.pincode = "Please enter a valid 6-digit pincode";
       }
       if (!formData.country) newErrors.country = "Country is required";
-      // if (formData.gst && !/^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/.test(formData.gst)) {
-      //   newErrors.gst = "Please enter a valid GST number or leave empty";
-      // }
-      // if (!formData.pan || !/^[A-Z]{5}[0-9]{4}[A-Z]{1}$/.test(formData.pan)) {
-      //   newErrors.pan = "Please enter a valid PAN number";
-      // }
     } else if (currentStep === 3) {
       if (!formData.bankName) newErrors.bankName = "Bank name is required";
       if (!formData.accountNumber) newErrors.accountNumber = "Account number is required";
-      // if (!formData.ifsc || !/^[A-Z]{4}0[A-Z0-9]{6}$/.test(formData.ifsc)) {
-      //   newErrors.ifsc = "Please enter a valid IFSC code";
-      // }
       if (!formData.accountHolder) newErrors.accountHolder = "Account holder name is required";
       if (!formData.password || formData.password.length < 8) {
         newErrors.password = "Password must be at least 8 characters";
@@ -119,90 +109,173 @@ export default function VendorRegisterPage() {
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { id, name, value } = e.target
-    const key = name || id // Use name if available, fallback to id
-    console.log(`Input change: ${key} = ${value}`)
-    setFormData((prev) => ({ ...prev, [key]: value }))
+    const { id, name, value } = e.target;
+    const key = name || id;
+    setFormData((prev) => ({ ...prev, [key]: value }));
     if (errors[key]) {
-      setErrors((prev) => ({ ...prev, [key]: null }))
+      setErrors((prev) => ({ ...prev, [key]: null }));
     }
-  }
+  };
+
+  const handleOtpChange = (index: number, value: string) => {
+    if (/^\d?$/.test(value)) { // Allow single digit or empty
+      const newOtp = [...formData.otp];
+      newOtp[index] = value;
+      setFormData((prev) => ({ ...prev, otp: newOtp }));
+      if (errors.otp) {
+        setErrors((prev) => ({ ...prev, otp: null }));
+      }
+      // Auto-focus next input
+      if (value && index < 3) {
+        document.getElementById(`otp-${index + 1}`)?.focus();
+      }
+    }
+  };
 
   const handleInputFocus = (id: string) => {
-    console.log(`Input focused: ${id}`)
-  }
+    console.log(`Input focused: ${id}`);
+  };
 
-  const handleInputKeyDown = (e: React.KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    console.log(`Key down on ${e.currentTarget.id}: ${e.key}`)
-  }
+  const handleInputKeyDown = (e: React.KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>, index?: number) => {
+    console.log(`Key down on ${e.currentTarget.id}: ${e.key}`);
+    if (index !== undefined && e.key === "Backspace" && !formData.otp[index] && index > 0) {
+      document.getElementById(`otp-${index - 1}`)?.focus();
+    }
+  };
 
   const handleSelectChange = (field: keyof FormData, value: string) => {
-    console.log(`Select change: ${field} = ${value}`)
-    setFormData((prev) => ({ ...prev, [field]: value }))
+    setFormData((prev) => ({ ...prev, [field]: value }));
     if (errors[field]) {
-      setErrors((prev) => ({ ...prev, [field]: null }))
+      setErrors((prev) => ({ ...prev, [field]: null }));
     }
-  }
+  };
 
-  const handleSendOtp = () => {
-    if (!/^\d{10}$/.test(formData.mobile)) {
-      setErrors((prev) => ({ ...prev, mobile: "Please enter a valid 10-digit mobile number" }))
-      return
+  const handleSendOtp = async () => {
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+      setErrors((prev) => ({ ...prev, email: "Please enter a valid email" }));
+      return;
     }
-    setOtpSent(true)
-    toast({
-      title: "OTP Sent",
-      description: "Please enter the OTP '1234' for testing.",
-    })
-  }
 
-  const handleNextStep = () => {
+    try {
+      const response = await fetch(`/api/vendor/send-otp`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: formData.email }),
+      });
+      const data = await response.json();
+      console.log(data)
+      if (data.success) {
+        setOtpSent(true);
+        toast({
+          title: "OTP Sent",
+          description: "Please check your email for the 4-digit OTP.",
+        });
+      } else {
+        setErrors((prev) => ({ ...prev, email: data.message || "Failed to send OTP" }));
+        toast({
+          variant: "destructive",
+          title: "Error",
+          description: data.message || "Failed to send OTP",
+        });
+      }
+    } catch (error) {
+      console.error("Error sending OTP:", error);
+      setErrors((prev) => ({ ...prev, email: "Failed to connect to the server" }));
+      toast({
+        variant: "destructive",
+        title: "Error",
+        description: "Failed to connect to the server. Please try again.",
+      });
+    }
+  };
+
+  const handleVerifyOtp = async () => {
+    if (formData.otp.some((digit) => !/^\d$/.test(digit))) {
+      setErrors((prev) => ({ ...prev, otp: "Please enter a valid 4-digit OTP" }));
+      return false;
+    }
+
+    try {
+      const response = await fetch(`/api/verify-otp`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: formData.email, otp: formData.otp.join("") }),
+      });
+      const data = await response.json();
+      if (data.success) {
+        return true;
+      } else {
+        setErrors((prev) => ({ ...prev, otp: data.message || "Invalid OTP" }));
+        toast({
+          variant: "destructive",
+          title: "Error",
+          description: data.message || "Invalid OTP",
+        });
+        return false;
+      }
+    } catch (error) {
+      console.error("Error verifying OTP:", error);
+      setErrors((prev) => ({ ...prev, otp: "Failed to verify OTP" }));
+      toast({
+        variant: "destructive",
+        title: "Error",
+        description: "Failed to connect to the server. Please try again.",
+      });
+      return false;
+    }
+  };
+
+  const handleNextStep = async () => {
+    if (step === 1 && otpSent) {
+      const isOtpValid = await handleVerifyOtp();
+      if (!isOtpValid) return;
+    }
     if (validateStep(step)) {
-      setStep(step + 1)
+      setStep(step + 1);
     }
-  }
+  };
 
   const handlePrevStep = () => {
-    setStep(step - 1)
-    setErrors({})
-  }
+    setStep(step - 1);
+    setErrors({});
+  };
 
   const handleSubmit = async () => {
-    if (!validateStep(3)) return
+    if (!validateStep(3)) return;
 
     try {
       const response = await fetch(`${BASE_URL}/api/vendor/register`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      })
-      const data = await response.json()
+        body: JSON.stringify({ ...formData, otp: formData.otp.join("") }),
+      });
+      const data = await response.json();
       if (data.success) {
         toast({
           title: "Registration Successful",
           description: "Vendor registered successfully, awaiting verification.",
-        })
-        router.push("/vendor/login")
+        });
+        router.push("/vendor/login");
       } else {
         toast({
           variant: "destructive",
           title: "Registration Failed",
           description: data.message || "An error occurred during registration.",
-        })
+        });
       }
     } catch (error) {
-      console.error("Error submitting form:", error)
+      console.error("Error submitting form:", error);
       toast({
         variant: "destructive",
         title: "Error",
         description: "Failed to connect to the server. Please try again.",
-      })
+      });
     }
-  }
+  };
 
   return (
-    <div className="container mx-auto py-10 px-4">
-      <Link href="/" className="inline-flex items-center mb-8 text-sm font-medium text-primary">
+    <div className="container mx-auto py-10 px-4 text-blue-950">
+      <Link href="/" className="inline-flex items-center mb-8 text-sm font-medium text-blue-950">
         <ArrowLeft className="mr-2 h-4 w-4" />
         Back to Home
       </Link>
@@ -213,7 +286,7 @@ export default function VendorRegisterPage() {
           <p className="text-muted-foreground">Register to sell your products on our platform</p>
         </div>
 
-        <Card>
+        <Card className="text-blue-950">
           <CardHeader>
             <CardTitle>Vendor Registration</CardTitle>
             <CardDescription>Complete the form to register as a vendor (Step {step} of 3)</CardDescription>
@@ -294,58 +367,63 @@ export default function VendorRegisterPage() {
 
                 <div className="space-y-2">
                   <Label htmlFor="email">Business Email</Label>
-                  <Input
-                    id="email"
-                    name="email"
-                    type="email"
-                    autoComplete="email"
-                    placeholder="Enter business email"
-                    value={formData.email}
-                    onChange={handleInputChange}
-                    onFocus={() => handleInputFocus("email")}
-                    onKeyDown={handleInputKeyDown}
-                  />
-                  {errors.email && <p className="text-red-500 text-sm">{errors.email}</p>}
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="mobile">Mobile Number</Label>
                   <div className="flex space-x-2">
                     <Input
-                      id="mobile"
-                      name="mobile"
-                      type="tel"
-                      autoComplete="tel"
-                      placeholder="Enter mobile number"
-                      value={formData.mobile}
+                      id="email"
+                      name="email"
+                      type="email"
+                      autoComplete="email"
+                      placeholder="Enter business email"
+                      value={formData.email}
                       onChange={handleInputChange}
-                      onFocus={() => handleInputFocus("mobile")}
+                      onFocus={() => handleInputFocus("email")}
                       onKeyDown={handleInputKeyDown}
-                      pattern="\d{10}"
                     />
-                    <Button onClick={handleSendOtp} disabled={otpSent}>
-                      {otpSent ? "Sent" : "Send OTP"}
+                    <Button className="bg-blue-950" onClick={handleSendOtp} disabled={otpSent}>
+                      {otpSent ? "Resend OTP" : "Send OTP"}
                     </Button>
                   </div>
-                  {errors.mobile && <p className="text-red-500 text-sm">{errors.mobile}</p>}
+                  {errors.email && <p className="text-red-500 text-sm">{errors.email}</p>}
                 </div>
 
                 {otpSent && (
                   <div className="space-y-2">
-                    <Label htmlFor="otp">OTP Verification</Label>
-                    <Input
-                      id="otp"
-                      name="otp"
-                      type="text"
-                      placeholder="Enter OTP sent to your mobile"
-                      value={formData.otp}
-                      onChange={handleInputChange}
-                      onFocus={() => handleInputFocus("otp")}
-                      onKeyDown={handleInputKeyDown}
-                    />
+                    <Label>OTP Verification</Label>
+                    <div className="flex space-x-2">
+                      {formData.otp.map((digit, index) => (
+                        <Input
+                          key={index}
+                          id={`otp-${index}`}
+                          type="text"
+                          maxLength={1}
+                          className="w-12 text-center"
+                          value={digit}
+                          onChange={(e) => handleOtpChange(index, e.target.value)}
+                          onFocus={() => handleInputFocus(`otp-${index}`)}
+                          onKeyDown={(e) => handleInputKeyDown(e, index)}
+                        />
+                      ))}
+                    </div>
                     {errors.otp && <p className="text-red-500 text-sm">{errors.otp}</p>}
                   </div>
                 )}
+
+                <div className="space-y-2">
+                  <Label htmlFor="mobile">Mobile Number</Label>
+                  <Input
+                    id="mobile"
+                    name="mobile"
+                    type="tel"
+                    autoComplete="tel"
+                    placeholder="Enter mobile number"
+                    value={formData.mobile}
+                    onChange={handleInputChange}
+                    onFocus={() => handleInputFocus("mobile")}
+                    onKeyDown={handleInputKeyDown}
+                    pattern="\d{10}"
+                  />
+                  {errors.mobile && <p className="text-red-500 text-sm">{errors.mobile}</p>}
+                </div>
               </div>
             )}
 
@@ -563,7 +641,7 @@ export default function VendorRegisterPage() {
           <CardFooter className="flex justify-between">
             {step === 1 ? (
               <div className="flex w-full justify-between">
-                <Button variant="outline" asChild>
+                <Button className="bg-blue-950" asChild>
                   <Link href="/vendor/login">Already a vendor? Sign In</Link>
                 </Button>
                 <Button onClick={handleNextStep} disabled={!otpSent}>
@@ -589,5 +667,5 @@ export default function VendorRegisterPage() {
         </Card>
       </div>
     </div>
-  )
+  );
 }

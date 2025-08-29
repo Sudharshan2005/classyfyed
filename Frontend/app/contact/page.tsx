@@ -10,7 +10,7 @@ import Footer from "@/components/footer"
 
 export default function ContactPage() {
   return (
-    <div className="flex min-h-screen flex-col">
+    <div className="flex min-h-screen flex-col text-blue-950">
       <Navbar />
       <main className="flex-1">
         <div className="container mx-auto py-12 px-4">
@@ -23,10 +23,10 @@ export default function ContactPage() {
           </div>
 
           <div className="grid md:grid-cols-3 gap-8 mb-12">
-            <Card>
+            <Card className="text-blue-950">
               <CardContent className="p-6 flex flex-col items-center text-center">
                 <div className="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center mb-4">
-                  <Phone className="h-6 w-6 text-primary" />
+                  <Phone className="h-6 w-6 text-blue-950" />
                 </div>
                 <CardTitle className="mb-2">Phone</CardTitle>
                 <CardDescription>Our support team is available Mon-Fri, 9am-6pm</CardDescription>
@@ -34,21 +34,21 @@ export default function ContactPage() {
               </CardContent>
             </Card>
 
-            <Card>
+            <Card className="text-blue-950">
               <CardContent className="p-6 flex flex-col items-center text-center">
                 <div className="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center mb-4">
-                  <Mail className="h-6 w-6 text-primary" />
+                  <Mail className="h-6 w-6 text-blue-950" />
                 </div>
                 <CardTitle className="mb-2">Email</CardTitle>
                 <CardDescription>Send us an email and we&#39;ll get back to you within 24 hours</CardDescription>
-                <p className="mt-4 font-medium">support@studentdiscount.com</p>
+                <p className="mt-4 font-medium">support@classyfyed.com</p>
               </CardContent>
             </Card>
 
-            <Card>
+            <Card className="text-blue-950">
               <CardContent className="p-6 flex flex-col items-center text-center">
                 <div className="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center mb-4">
-                  <MapPin className="h-6 w-6 text-primary" />
+                  <MapPin className="h-6 w-6 text-blue-950" />
                 </div>
                 <CardTitle className="mb-2">Office</CardTitle>
                 <CardDescription>Visit our headquarters in person</CardDescription>
@@ -58,7 +58,7 @@ export default function ContactPage() {
           </div>
 
           <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-            <Card>
+            <Card className="text-blue-950">
               <CardHeader>
                 <CardTitle>Send us a message</CardTitle>
                 <CardDescription>Fill out the form below and we&#39;ll get back to you as soon as possible</CardDescription>
@@ -87,7 +87,7 @@ export default function ContactPage() {
                     <Label htmlFor="message">Message</Label>
                     <Textarea id="message" placeholder="Enter your message" rows={5} />
                   </div>
-                  <Button type="submit" className="w-full">
+                  <Button type="submit" className="w-full bg-blue-950 hover:bg-blue-800">
                     Send Message
                   </Button>
                 </form>
@@ -97,7 +97,7 @@ export default function ContactPage() {
             <div>
               <div className="rounded-lg overflow-hidden h-full min-h-[300px] bg-muted">
                 <iframe
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d248849.84916296526!2d77.6309395!3d12.9539974!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae1670c9b44e6d%3A0xf8dfc3e8517e4fe0!2sBengaluru%2C%20Karnataka!5e0!3m2!1sen!2sin!4v1652345678901!5m2!1sen!2sin"
+                  src="https://maps.google.com/maps?width=100%25&amp;height=600&amp;hl=en&amp;q=Narayanguda,%20Telangana+(Classyfyed)&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"
                   width="100%"
                   height="100%"
                   style={{ border: 0, minHeight: "400px" }}
